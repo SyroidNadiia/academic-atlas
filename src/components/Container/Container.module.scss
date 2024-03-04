@@ -1,0 +1,34 @@
+@import '../../scss/utilities/breakpoint-mixin.scss';
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+
+  /*Mobile styles (from 0 to 374.98px )*/
+  @include breakpoint('mobile-small') {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  /*Mobile styles (from 375x to 767.98px)*/
+  @include breakpoint('mobile-large') {
+    max-width: 375px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  /*Tablet styles (from 768px to 1339.98px)*/
+  @include breakpoint('tablet') {
+    max-width: 768px;
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+
+
+  /*Desktop styles (from 1440px and above)*/
+  @include breakpoint('desktop') {
+    max-width: 1440px;
+    padding-left: 94px;
+    padding-right: 94px;
+  }
+}
