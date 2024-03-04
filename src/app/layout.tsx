@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import styles from "./page.module.scss";
-import Header from "@/components/Header/Header";
+
 import Footer from "@/components/Footer/Footer";
+import Header from "@/components/Header/Header";
+
 import "./globals.css";
+import styles from "./page.module.scss";
 
 export const metadata: Metadata = {
   title:
@@ -19,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="uk">
       <body>
         <Header />
         <main className={styles.main}>{children}</main>

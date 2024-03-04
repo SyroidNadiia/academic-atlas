@@ -7,8 +7,9 @@ import logo from "../../../public/images/logo/Logo.svg";
 import styles from "./Header.module.scss";
 import { FiSearch } from "react-icons/fi";
 import { CgMenuRight } from "react-icons/cg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navigation from "../Navigation/Navigation";
+import { IoCloseSharp } from "react-icons/io5";
 import { useWindowSize } from "usehooks-ts";
 
 const Header = () => {
@@ -17,6 +18,24 @@ const Header = () => {
 
   const { width } = useWindowSize();
   const isSmallScreen = width < 1440;
+
+  useEffect(() => {
+    const onEscKeydown = (e: KeyboardEvent) => {
+      if (e.code === "Escape") {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      window.addEventListener("keydown", onEscKeydown);
+    } else {
+      window.removeEventListener("keydown", onEscKeydown);
+    }
+
+    return () => {
+      window.removeEventListener("keydown", onEscKeydown);
+    };
+  }, [isMobileMenuOpen]);
 
   const toggleMenuOpen = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -35,59 +54,57 @@ const Header = () => {
           <Image src={logo} alt="logo" width={76} height={52} />
         </Link>
 
-        <ul className={styles.headerIconsList}>
-          <li key="searchIcon">
-            <FiSearch
-              style={{ width: "24px", height: "24px", color: "#fefefe" }}
-              //   onClick={toggleMenuOpen}
-              aria-label={
-                isSearchOpen ? "Close Search Menu" : "Open Search Menu"
-              }
-            />
-          </li>
-          <li key="menuIcon">
-            <CgMenuRight
-              style={{
-                width: "24px",
-                height: "24px",
-                color: "#fefefe",
-              }}
-              onClick={toggleMenuOpen}
-              aria-label={
-                isMobileMenuOpen ? "Close Mobile Menu" : "Open Mobile Menu"
-              }
-            />
-          </li>
-          {isSmallScreen && (
-            <li
-              key="burgerIcon"
-              className={`${styles.iconsItem} ${
-                isMobileMenuOpen && styles.menuOpen
-              } ${styles.burgerItem}`}
-            >
-              <button
-                type="button"
-                className={styles.menuIcon}
-                onClick={toggleMenuOpen}
-                aria-label={isMobileMenuOpen ? "Close Menu" : "Open Menu"}
-              >
-                <span></span>
-              </button>
+        {/* Desktop navigation */}
+        {/* <Navigation className={styles.navbar} /> */}
+
+        {isMobileMenuOpen ? (
+          <IoCloseSharp
+            style={{ width: "24px", height: "24px" }}
+            className={`${styles.closeIcon} ${
+              isMobileMenuOpen ? styles.fixed : ""
+            }`}
+            onClick={toggleMenuOpen}
+            aria-label={isMobileMenuOpen ? "Close Menu" : "Open Menu"}
+          />
+        ) : (
+          <ul className={styles.headerIconsList}>
+            <li key="searchIcon">
+              <FiSearch
+                style={{ width: "24px", height: "24px", color: "#fefefe" }}
+                //   onClick={toggleMenuOpen}
+                aria-label={
+                  isSearchOpen ? "Close Search Menu" : "Open Search Menu"
+                }
+              />
             </li>
-          )}
-        </ul>
+            <li key="menuIcon">
+              <CgMenuRight
+                style={{
+                  width: "24px",
+                  height: "24px",
+                  color: "#fefefe",
+                }}
+                onClick={toggleMenuOpen}
+                aria-label={
+                  isMobileMenuOpen ? "Close Mobile Menu" : "Open Mobile Menu"
+                }
+              />
+            </li>
+          </ul>
+        )}
+
         {/* Mobile menu */}
         <div
           className={`${styles.burgerMenu} ${
             isMobileMenuOpen && styles.isOpen
           }`}
         >
-          <Navigation
-          //   className={styles.mobileMenu}
-          //   onClick={toggleMenuOpen}
-
-          //   navDict={navDict}
-          />
+          <Container>
+            <Navigation
+              className={styles.mobileMenu}
+              onClick={toggleMenuOpen}
+            />
+          </Container>
         </div>
       </Container>
     </header>
