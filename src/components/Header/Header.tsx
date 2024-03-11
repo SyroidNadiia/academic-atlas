@@ -1,16 +1,18 @@
 "use client";
 
-import Link from "next/link";
-import Container from "../Container/Container";
 import Image from "next/image";
-import logo from "../../../public/images/logo/Logo.svg";
-import styles from "./Header.module.scss";
-import { FiSearch } from "react-icons/fi";
-import { CgMenuRight } from "react-icons/cg";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import Navigation from "../Navigation/Navigation";
+import { CgMenuRight } from "react-icons/cg";
+import { FiSearch } from "react-icons/fi";
 import { IoCloseSharp } from "react-icons/io5";
 import { useWindowSize } from "usehooks-ts";
+
+import logo from "../../../public/images/logo/Logo.svg";
+import Container from "../Container/Container";
+import Navigation from "../Navigation/Navigation";
+
+import styles from "./Header.module.scss";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

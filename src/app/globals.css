@@ -2,16 +2,26 @@
   /* colors */
   --cl-black: #202020;
   --cl-dark: #1b1b1b;
-  --cl-BGframe: #1a1e2d;
-  --cl-BGblue: #1b254c;
+  --cl-BGFrame: #1a1e2d;
+  --cl-BGBlue: #1b254c;
   --cl-blue: #2091f9;
   --cl-light: #9bc9ff;
   --cl-white: #fefefe;
+  --cl-firstYellov: #F8A401;
+  --cl-secondaryYellov: #F92020;
+  --cl-yellow: #F7FB20;
+  --cl-green: #30AE35;
+  --cl-darkGrey: #3D4853;
+  --cl-grey: #3D4853;
+  --cl-lightGrey: #3D4853;
+  
+
+
 
   --gradient: linear-gradient(
     to right,
     var(--cl-dark) 0%,
-    var(--cl-BGblue) 100%
+    var(--cl-BGBlue) 100%
   );
 
   /* animat */

@@ -1,9 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import styles from "./Navigation.module.scss";
 import Link from "next/link";
+import { useState } from "react";
+import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
+
 import { generateNavLinks } from "./navData";
+
+import styles from "./Navigation.module.scss";
 
 interface MenuItem {
   title: string;
@@ -28,16 +31,22 @@ export interface NavDictI {
 }
 
 const Navigation: React.FC<NavigationProps> = ({ className, onClick }) => {
-  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const [openSubmenus, setOpenSubmenus] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const menuItems = generateNavLinks();
 
   const handleSubmenuClick = (title: string) => {
-    setOpenSubmenu((prevOpenSubmenu) =>
-      prevOpenSubmenu === title ? null : title
-    );
+    setOpenSubmenus((prevState) => ({
+      ...prevState,
+      [title]: !prevState[title],
+    }));
   };
 
   const renderMenuItem = (item: MenuItem) => {
+    const hasSubmenu = item.submenu && item.submenu.length > 0;
+    const submenuIsOpen = openSubmenus[item.title] || false;
+
     return (
       <li key={item.title}>
         {item.link ? (
@@ -45,13 +54,13 @@ const Navigation: React.FC<NavigationProps> = ({ className, onClick }) => {
         ) : (
           <>
             <span onClick={() => handleSubmenuClick(item.title)}>
-              {item.title}
+              {item.title} {hasSubmenu && <IoIosArrowDown />}
             </span>
-            {item.submenu && openSubmenu === item.title && (
+            {hasSubmenu && submenuIsOpen && (
               <ul>
-                {item.submenu.map((subItem) => (
+                {item.submenu!.map((subItem) => (
                   <li key={subItem.title}>
-                    <Link href={item.link ?? "#"}>{subItem.title}</Link>
+                    <Link href={subItem.link ?? "#"}>{subItem.title}</Link>
                   </li>
                 ))}
               </ul>
